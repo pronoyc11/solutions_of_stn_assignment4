@@ -239,3 +239,118 @@ var merge = function (nums1, m, nums2, n) {
   }
 };
 //PROBLEM 16 Solution
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var threeSum = function (nums) {
+  nums.sort((a, b) => a - b);
+  const result = [];
+
+  for (let i = 0; i < nums.length - 2; i++) {
+    // Early exit: if the smallest element is positive, no triplet can sum to 0
+    if (nums[i] > 0) break;
+
+    // Skip duplicate values for the fixed element
+    if (i > 0 && nums[i] === nums[i - 1]) continue;
+
+    let left = i + 1;
+    let right = nums.length - 1;
+
+    while (left < right) {
+      const sum = nums[i] + nums[left] + nums[right];
+
+      if (sum === 0) {
+        result.push([nums[i], nums[left], nums[right]]);
+
+        // Skip duplicates for left and right
+        while (left < right && nums[left] === nums[left + 1]) left++;
+        while (left < right && nums[right] === nums[right - 1]) right--;
+
+        left++;
+        right--;
+      } else if (sum < 0) {
+        left++; // need a larger sum
+      } else {
+        right--; // need a smaller sum
+      }
+    }
+  }
+
+  return result;
+};
+//PROBLEM 17 Solution
+/**
+ * @param {number[]} digits
+ * @return {number[]}
+ */
+var plusOne = function (digits) {
+  for (let i = digits.length - 1; i >= 0; i--) {
+    if (digits[i] < 9) {
+      digits[i]++;
+      return digits;
+    }
+    digits[i] = 0; // 9 + 1 = 10 → write 0, carry 1
+  }
+
+  // All digits were 9 → prepend a 1
+  return [1, ...digits];
+};
+//PROBLEM 18 Solution
+/**
+ * @param {string[]} s
+ * @return {void}
+ */
+var reverseString = function (s) {
+  let left = 0;
+  let right = s.length - 1;
+
+  while (left < right) {
+    [s[left], s[right]] = [s[right], s[left]];
+    left++;
+    right--;
+  }
+};
+//PROBLEM 19 Solution
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLastWord = function (s) {
+  let i = s.length - 1;
+
+  // Skip trailing spaces
+  while (i >= 0 && s[i] === " ") i--;
+
+  // Count the last word
+  let count = 0;
+  while (i >= 0 && s[i] !== " ") {
+    count++;
+    i--;
+  }
+
+  return count;
+};
+//PROBLEM 20 Solution
+/**
+ * @param {string[]} strs
+ * @return {string}
+ */
+var longestCommonPrefix = function(strs) {
+ if (strs.length === 0) return "";
+
+    for (let i = 0; i < strs[0].length; i++) {
+        const char = strs[0][i];
+
+        for (let j = 1; j < strs.length; j++) {
+            if (i >= strs[j].length || strs[j][i] !== char) {
+                return strs[0].slice(0, i);
+            }
+        }
+    }
+
+    return strs[0];
+
+};
+
+
